@@ -1,7 +1,7 @@
 @extends("layout")
 @section("title", "create a post")
 @section("content")
-    <h1>create post</h1>
+    <h1 class="mb-3">create post</h1>
     <form method="POST" action="{{ route('posts.store') }}">
         @csrf
         <div class="mb-3">
@@ -22,7 +22,9 @@
             {{ $message }}
         </div>
         @enderror
-        <button class="btn btn-primary" type="submit"><i class="bi bi-plus-circle"></i> create</button>
-        <a class="btn btn-primary" href="{{ route('posts.index') }}"><i class="bi bi-arrow-bar-left"></i> return</a>
+        <div class="mb-3">
+            <button class="btn btn-primary" type="submit"><i class="bi bi-plus-circle"></i> create</button>
+            <a class="btn btn-primary" href="{{ route('posts.index') }}"><i class="bi bi-arrow-bar-left"></i> return</a>
+        </div>
     </form>
 @endsection

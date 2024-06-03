@@ -13,9 +13,7 @@
 </head>
 <body class="h-100 bg-secondary d-flex flex-column justify-content-center">
 <div class="container card bg-white p-3 shadow">
-    <div class="row">
-        @yield('content')
-    </div>
+    @yield('content')
 </div>
 </body>
 </html>

@@ -23,6 +23,7 @@ class PostController extends Controller
             ->select('*')
             ->orderBy('created_at', 'desc')
             ->paginate(5);
+
         return view('posts.index', compact(['posts']));
     }
 

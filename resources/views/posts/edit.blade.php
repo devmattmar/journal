@@ -1,7 +1,7 @@
 @extends("layout")
 @section("title", "edit post")
 @section("content")
-    <h1>edit post {{ $post->id }}</h1>
+    <h1 class="mb-3">edit post {{ $post->id }}</h1>
     @if (isset($post))
         <form method="POST" action="{{ route('posts.update', $post) }}">
             @method('PUT')
@@ -24,8 +24,10 @@
                 {{ $message }}
             </div>
             @enderror
-            <button class="btn btn-warning" type="submit"><i class="bi bi-pen"></i> edit</button>
-            <a class="btn btn-primary" href="{{ route('posts.index') }}"><i class="bi bi-arrow-bar-left"></i> return</a>
+            <div class="mb-3">
+                <button class="btn btn-warning" type="submit"><i class="bi bi-pen"></i> edit</button>
+                <a class="btn btn-primary" href="{{ route('posts.index') }}"><i class="bi bi-arrow-bar-left"></i> return</a>
+            </div>
         </form>
     @endif
 @endsection
