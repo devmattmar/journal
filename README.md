@@ -8,7 +8,7 @@ It has a login page, so you should consider it as a personal diary.
 ## How to use locally ?
 
 - Clone this repository.
-- 'composer install' in terminal.
+- composer install in terminal.
 - php artisan migrate
 - php artisan serve
 - register then use the app.
