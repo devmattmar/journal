@@ -22,7 +22,7 @@ class PostController extends Controller
         $posts = Post::query()
             ->select('*')
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate(4);
 
         return view('posts.index', compact(['posts']));
     }
@@ -51,6 +51,7 @@ class PostController extends Controller
             ->create([
                 'title' => $validated['title'],
                 'content' => $validated['content'],
+                'author' => auth()->user()->name
             ]);
 
         return redirect(route("posts.index"));

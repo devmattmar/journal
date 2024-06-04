@@ -11,7 +11,7 @@
     {{--Bootstrap icons 1.11.3--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body class="h-100 bg-secondary d-flex flex-column justify-content-center">
+<body class="h-100 bg-light d-flex flex-column justify-content-center">
 <div class="container card bg-white p-3 shadow">
     @yield('content')
 </div>

@@ -1,4 +1,4 @@
-@extends("layout")
+@extends("components.layout")
 @section("title", "edit post")
 @section("content")
     <h1 class="mb-3">edit post {{ $post->id }}</h1>
@@ -17,7 +17,7 @@
             @enderror
             <div class="mb-3">
                 <label class="form-label" for="content">content</label><br/>
-                <textarea class="form-control" name="content" id="content" rows="5" placeholder="post content">{{ isset($post->content) ? $post->content : old('content') }}</textarea>
+                <textarea class="form-control" name="content" id="content" rows="20" placeholder="post content">{{ isset($post->content) ? $post->content : old('content') }}</textarea>
             </div>
             @error("content")
             <div class="alert alert-danger">
@@ -25,8 +25,8 @@
             </div>
             @enderror
             <div class="mb-3">
-                <button class="btn btn-warning" type="submit"><i class="bi bi-pen"></i> edit</button>
                 <a class="btn btn-primary" href="{{ route('posts.index') }}"><i class="bi bi-arrow-bar-left"></i> return</a>
+                <button class="btn btn-warning" type="submit"><i class="bi bi-pen"></i> edit</button>
             </div>
         </form>
     @endif

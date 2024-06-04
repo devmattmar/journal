@@ -1,4 +1,4 @@
-@extends("layout")
+@extends("components.layout")
 @section("title", "create a post")
 @section("content")
     <h1 class="mb-3">create post</h1>
@@ -23,8 +23,8 @@
         </div>
         @enderror
         <div class="mb-3">
-            <button class="btn btn-primary" type="submit"><i class="bi bi-plus-circle"></i> create</button>
             <a class="btn btn-primary" href="{{ route('posts.index') }}"><i class="bi bi-arrow-bar-left"></i> return</a>
+            <button class="btn btn-success" type="submit"><i class="bi bi-plus-circle"></i> create</button>
         </div>
     </form>
 @endsection

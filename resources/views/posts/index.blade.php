@@ -1,4 +1,4 @@
-@extends("layout")
+@extends("components.layout")
 
 @section("title", "All Posts")
 
@@ -17,14 +17,14 @@
         <div class="col d-flex justify-content-between align-items-center">
             <h1 class="mb-0">All Posts</h1>
             <div class="d-flex gap-2">
-                <a class="btn btn-primary" href="{{ route('posts.create') }}">
-                    <i class="bi bi-plus-circle"></i> Create New Post
+                <a class="btn btn-success" href="{{ route('posts.create') }}">
+                    <i class="bi bi-plus-circle"></i> Create new
                 </a>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="btn btn-danger" type="submit">
-                        <i class="bi bi-door-closed"></i> Logout
+                        <i class="bi bi-door-closed"></i> Logout {{ auth()->user()->name }}
                     </button>
                 </form>
             </div>
@@ -33,14 +33,12 @@
 
     <div class="row">
         @foreach ($posts as $post)
-            <div class="col-md-4 mb-3">
+            <div class="col-md-3 mb-3">
                 <div class="card h-100">
                     <div class="card-header">
-                        {{ $post->title }}
-                        <br>
-                        <small>
-                            {{ $post->created_at }}
-                        </small>
+                        <h2 class="card-title">{{ $post->title }}</h2>
+                        <div class="form-text">{{ $post->author }}</div>
+                        <div class="form-text">{{ $post->created_at }}</div>
                     </div>
                     <div class="card-body">
                         {{ Str::limit($post->content, 100) }}
@@ -67,7 +65,7 @@
         @endforeach
     </div>
 
-    <div class="d-flex justify-content-center mt-3">
+    <div>
         {{ $posts->links() }}
     </div>
 @endsection
