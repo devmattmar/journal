@@ -56,6 +56,7 @@ class PostController extends Controller
             ->create([
                 'title' => $validated['title'],
                 'content' => $validated['content'],
+                'category_id' => $validated['category_id'],
                 'author' => auth()->user()->name
             ]);
         $post->tags()->sync($validated['tags']);
