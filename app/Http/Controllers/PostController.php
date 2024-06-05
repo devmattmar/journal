@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -34,25 +36,29 @@ class PostController extends Controller
      */
     public function create(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        return view("posts.create");
+        return view("posts.create", [
+            "post" => new Post(),
+            "categories" => Category::select('id', 'name')->get(),
+            "tags" => Tag::select('id', 'name')->get()
+        ]);
     }
 
     /**
      * store posts
      * @param PostRequest $request
      * @return \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
-     * @author MARIANI Matthieu <dev.marianimatthieu@gmail.com>
+     * @author MARIANI Matthieu <<dev.marianimatthieu@gmail.com>>
      */
     public function store(PostRequest $request): \Illuminate\Foundation\Application|Redirector|RedirectResponse|Application
     {
         $validated = $request->validated();
-
-        Post::query()
+        $post = Post::query()
             ->create([
                 'title' => $validated['title'],
                 'content' => $validated['content'],
                 'author' => auth()->user()->name
             ]);
+        $post->tags()->sync($validated['tags']);
 
         return redirect(route("posts.index"));
     }
@@ -76,7 +82,11 @@ class PostController extends Controller
      */
     public function edit(Post $post): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        return view("posts.edit", compact("post"));
+        return view("posts.edit", [
+            "post" => $post,
+            "categories" => Category::select('id', 'name')->get(),
+            "tags" => Tag::select('id', 'name')->get()
+        ]);
     }
 
     /**
@@ -90,9 +100,11 @@ class PostController extends Controller
     {
         $validated = $request->validated();
 
+        $post->tags()->sync($validated['tags']);
+
         $post->update($validated);
 
-        return redirect(route("posts.index"));
+        return redirect()->route('posts.show', $post->id);
     }
 
     /**

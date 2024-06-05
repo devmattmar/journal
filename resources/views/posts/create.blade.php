@@ -14,6 +14,33 @@
         </div>
         @enderror
         <div class="mb-3">
+            <label for="category" class="form-label">category</label>
+            <select id="category" class="form-select" name="category_id">
+                <option value="">select category</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        @error("category_id")
+        <div class="alert alert-danger">
+            {{ $message }}
+        </div>
+        @enderror
+        <div class="mb-3">
+            <label for="tag" class="form-label">tags</label>
+            <select id="tag" class="form-select" name="tags[]" multiple>
+                @foreach($tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        @error("tags")
+        <div class="alert alert-danger">
+            {{ $message }}
+        </div>
+        @enderror
+        <div class="mb-3">
             <label class="form-label" for="content">content</label><br/>
             <textarea class="form-control" name="content" id="content" rows="5" placeholder="post content">{{ old('content') }}</textarea>
         </div>
