@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-100">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -11,8 +11,44 @@
     {{--Bootstrap icons 1.11.3--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-<body class="h-100 bg-light d-flex flex-column justify-content-center">
-<div class="container card bg-white p-4 shadow-sm">
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg bg-light mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/posts">Journal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('posts.create') }}">
+                            <i class="bi bi-plus-circle"></i> Create new post
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('categories.create') }}">
+                            <i class="bi bi-plus-circle"></i> Create new category
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('tags.create') }}">
+                            <i class="bi bi-plus-circle"></i> Create new tag
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="nav-link" type="submit">
+                                <i class="bi bi-door-closed"></i> Logout {{ auth()->user()->name }}
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     @yield('content')
 </div>
 </body>

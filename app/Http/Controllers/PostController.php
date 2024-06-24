@@ -59,7 +59,10 @@ class PostController extends Controller
                 'category_id' => $validated['category_id'],
                 'author' => auth()->user()->name
             ]);
-        $post->tags()->sync($validated['tags']);
+
+        if (isset($validated['tags'])) {
+            $post->tags()->sync($validated['tags']);
+        }
 
         return redirect(route("posts.index"));
     }
@@ -101,7 +104,9 @@ class PostController extends Controller
     {
         $validated = $request->validated();
 
-        $post->tags()->sync($validated['tags']);
+        if (isset($validated['tags'])) {
+            $post->tags()->sync($validated['tags']);
+        }
 
         $post->update($validated);
 
