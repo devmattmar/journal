@@ -21,6 +21,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    @auth()
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('posts.create') }}">
                             <i class="bi bi-plus-circle"></i> Create new post
@@ -41,10 +42,12 @@
                             @csrf
                             @method('DELETE')
                             <button class="nav-link" type="submit">
-                                <i class="bi bi-door-closed"></i> Logout {{ auth()->user()->name }}
+                                <i class="bi bi-door-closed"></i>
+                                Logout {{ auth()->user()->name }}
                             </button>
                         </form>
                     </li>
+                    @endauth
                 </ul>
             </div>
         </div>

@@ -1,57 +1,95 @@
 @extends("components.layout")
-@section("title", "create a post")
+
+@section("title", "Create a Post")
+
 @section("content")
-    <h1 class="mb-3">create post</h1>
+    <h1 class="mb-4">Create Post</h1>
+
     <form method="POST" action="{{ route('posts.store') }}">
         @csrf
-        <div class="mb-3">
-            <label class="form-label" for="title">title</label><br/>
-            <input class="form-control" type="text" name="title" value="{{ old('title') }}" id="title" placeholder="post title">
+
+        <div class="mb-4">
+            <label class="form-label" for="title">Title</label>
+            <input
+                class="form-control @error('title') is-invalid @enderror"
+                type="text"
+                name="title"
+                id="title"
+                value="{{ old('title') }}"
+                placeholder="Enter post title"
+            >
+            @error('title')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
         </div>
-        @error("title")
-        <div class="alert alert-danger">
-            {{ $message }}
-        </div>
-        @enderror
-        <div class="mb-3">
-            <label for="category" class="form-label">category</label>
-            <select id="category" class="form-select" name="category_id">
-                <option value="">select category</option>
+
+        <div class="mb-4">
+            <label class="form-label" for="category">Category</label>
+            <select
+                id="category"
+                class="form-select @error('category_id') is-invalid @enderror"
+                name="category_id"
+            >
+                <option value="">Select category</option>
                 @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                        {{ $category->name }}
+                    </option>
                 @endforeach
             </select>
+            @error('category_id')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
         </div>
-        @error("category_id")
-        <div class="alert alert-danger">
-            {{ $message }}
-        </div>
-        @enderror
-        <div class="mb-3">
-            <label for="tag" class="form-label">tags</label>
-            <select id="tag" class="form-select" name="tags[]" multiple>
+
+        <div class="mb-4">
+            <label class="form-label" for="tags">Tags</label>
+            <select
+                id="tags"
+                class="form-select @error('tags') is-invalid @enderror"
+                name="tags[]"
+                multiple
+            >
                 @foreach($tags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                    <option value="{{ $tag->id }}" {{ collect(old('tags'))->contains($tag->id) ? 'selected' : '' }}>
+                        {{ $tag->name }}
+                    </option>
                 @endforeach
             </select>
+            @error('tags')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
         </div>
-        @error("tags")
-        <div class="alert alert-danger">
-            {{ $message }}
+
+        <div class="mb-4">
+            <label class="form-label" for="content">Content</label>
+            <textarea
+                class="form-control @error('content') is-invalid @enderror"
+                name="content"
+                id="content"
+                rows="6"
+                placeholder="Write your post content here"
+            >{{ old('content') }}</textarea>
+            @error('content')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+            @enderror
         </div>
-        @enderror
-        <div class="mb-3">
-            <label class="form-label" for="content">content</label><br/>
-            <textarea class="form-control" name="content" id="content" rows="5" placeholder="post content">{{ old('content') }}</textarea>
-        </div>
-        @error("content")
-        <div class="alert alert-danger">
-            {{ $message }}
-        </div>
-        @enderror
-        <div class="mb-3">
-            <a class="btn btn-primary" href="{{ route('posts.index') }}"><i class="bi bi-arrow-bar-left"></i> return</a>
-            <button class="btn btn-success" type="submit"><i class="bi bi-plus-circle"></i> create</button>
+
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-secondary" href="{{ route('posts.index') }}">
+                <i class="bi bi-arrow-bar-left"></i> Return
+            </a>
+            <button class="btn btn-success" type="submit">
+                <i class="bi bi-plus-circle"></i> Create
+            </button>
         </div>
     </form>
 @endsection

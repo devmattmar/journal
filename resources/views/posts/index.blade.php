@@ -4,71 +4,50 @@
 
 @section("content")
 
-    @if ( session('success') )
-        <div class="row mb-3">
-            <div class="col">
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
+    @if (session('success'))
+        <div class="mb-3">
+            <div class="alert alert-success">
+                {{ session('success') }}
             </div>
         </div>
     @endif
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col" style="width: 5%">id</th>
-                <th scope="col" style="width: 10%">title</th>
-                <th scope="col" style="width: 10%">author</th>
-                <th scope="col" style="width: 10%">category</th>
-                <th scope="col" style="width: 10%">tags</th>
-                <th scope="col" style="width: 20%">created at</th>
-                <th scope="col" style="width: 20%">actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach ($posts as $post)
-                <tr>
-                    <td class="align-middle">
-                        {{$post->id}}
-                    </td>
-                    <td class="align-middle">
-                        {{$post->title}}
-                    </td>
-                    <td class="align-middle">
-                        {{$post->author}}
-                    </td>
-                    <td class="align-middle">
-                        {{$post->category?->name}}
-                    </td>
-                    <td class="align-middle">
-                        @foreach($post->tags as $tag)
-                            {{ $tag->name }}
-                        @endforeach
-                    </td>
-                    <td class="align-middle">
-                        {{$post->created_at}}
-                    </td>
-                    <td class="d-flex gap-2">
-                        <a class="btn btn-primary" href="{{ route('posts.show', $post) }}">
+    <div class="row">
+        @foreach ($posts as $post)
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">{{ $post->title }}</h5>
+                        <p class="card-text">
+                            <strong>Author:</strong> {{ $post->author }} <br>
+                            <strong>Category:</strong> {{ $post->category?->name ?? 'Uncategorized' }} <br>
+                            <strong>Tags:</strong>
+                            @foreach($post->tags as $tag)
+                                <span class="badge bg-secondary">{{ $tag->name }}</span>
+                            @endforeach
+                        </p>
+                        <p class="card-text mt-auto">
+                            <small class="text-muted">Created at: {{ $post->created_at }}</small>
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex gap-2">
+                        <a class="btn btn-primary w-100" href="{{ route('posts.show', $post) }}">
                             <i class="bi bi-eye"></i> View
                         </a>
-                        <a class="btn btn-warning" href="{{ route('posts.edit', $post) }}">
+                        <a class="btn btn-warning w-100" href="{{ route('posts.edit', $post) }}">
                             <i class="bi bi-pen"></i> Edit
                         </a>
-                        <form method="POST" action="{{ route('posts.destroy', $post) }}">
+                        <form method="POST" action="{{ route('posts.destroy', $post) }}" class="w-100">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger" type="submit">
+                            <button class="btn btn-danger w-100" type="submit">
                                 <i class="bi bi-x-circle"></i> Delete
                             </button>
                         </form>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
 
     <div>
